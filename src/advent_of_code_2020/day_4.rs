@@ -40,6 +40,17 @@ pub fn part_2(puzzle_input: String) -> u32 {
             mapped_fields
         })
         .collect();
+
+    let height_re = Regex::new(
+        "^(1[5-8][0-9]|19[0-3])cm$|^(59|6[0-9]|7[0-6])in$"
+    ).unwrap();
+    let color_re = Regex::new(r"^#[0-9a-f]{6}$").unwrap();
+    let eye_re = Regex::new(
+        r"^amb$|^blu$|^brn$|^gry$|^grn$|^hzl$|^oth$"
+    ).unwrap();
+    let pid_re = Regex::new("^[0-9]{9}$").unwrap();
+    let year_re = Regex::new("^[0-9]{4}$").unwrap();
+
     let valid_passports: Vec<HashMap<&str, &str>> = passports
         .into_iter()
         .filter(|passport| {
@@ -56,15 +67,6 @@ pub fn part_2(puzzle_input: String) -> u32 {
             // Each validation set for each individual rule could be its own
             // function pulled out - possibly use a struct instead of a
             // HashMap as well
-            let height_re = Regex::new(
-                "^(1[5-8][0-9]|19[0-3])cm$|^(59|6[0-9]|7[0-6])in$"
-            ).unwrap();
-            let color_re = Regex::new(r"^#[0-9a-f]{6}$").unwrap();
-            let eye_re = Regex::new(
-                r"^amb$|^blu$|^brn$|^gry$|^grn$|^hzl$|^oth$"
-            ).unwrap();
-            let pid_re = Regex::new("^[0-9]{9}$").unwrap();
-            let year_re = Regex::new("^[0-9]{4}$").unwrap();
 
             let birth = present.get("byr").unwrap();
             let issue = present.get("iyr").unwrap();
