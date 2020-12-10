@@ -25,6 +25,7 @@ pub fn part_2(puzzle_input: String) -> u32 {
             let group_characters: Vec<&str> = group
                 .split("\n")
                 .collect();
+            // Is there an simpler way to convert an iterator to a hashset?
             let mut initial_set = HashSet::new();
             for answer in group_characters[0].chars() {
                 initial_set.insert(answer);
