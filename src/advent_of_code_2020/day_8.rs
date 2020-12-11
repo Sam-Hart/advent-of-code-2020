@@ -60,17 +60,15 @@ impl Computer {
         let pristine_instructions = self.instructions.clone();
         for i in 0..pristine_instructions.len() {
             let instruction = &pristine_instructions[i];
-            if instruction.op_code.as_str() == "jmp" {
-                self.instructions[i] = Instruction {
-                    op_code: String::from("nop"),
-                    value: instruction.value
-                };
-            } else if instruction.op_code.as_str() == "nop" {
-                self.instructions[i] = Instruction {
-                    op_code: String::from("jmp"),
-                    value: instruction.value
-                };
-            }
+            let new_op = match instruction.op_code.as_str() {
+                "jmp" => "nop",
+                "nop" => "jmp",
+                x => x,
+            };
+            self.instructions[i] = Instruction {
+                op_code: String::from(new_op),
+                value: instruction.value
+            };
             let result = self.compute();
             if self.stack_pointer >= pristine_instructions.len() as i32 {
                 return result
